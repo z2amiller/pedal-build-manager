@@ -9,8 +9,11 @@
   /* ── theme variables ─────────────────────────────────────────── */
   :root {
     --board-bg:        #1a1a2e;
-    --board-fill:      rgba(0, 80, 20, 0.28);
+    --board-fill:      rgba(0, 80, 20, 0.38);
+    --board-stroke:    rgba(255, 255, 255, 0.22);
     --silks-filter:    invert(1) brightness(2);
+    --mask-filter:     invert(1) brightness(1.1) sepia(0.15) saturate(0.7);
+    --overlay-filter:  invert(0.6) sepia(0.1);
     --bom-bg:          #fff;
     --bom-text:        #222;
     --bom-hover:       #f5f5f5;
@@ -21,8 +24,11 @@
   }
   [data-theme="light"] {
     --board-bg:      #c8d8c0;
-    --board-fill:    rgba(0, 100, 30, 0.18);
+    --board-fill:    rgba(0, 100, 30, 0.22);
+    --board-stroke:  rgba(0, 60, 10, 0.45);
     --silks-filter:  none;
+    --mask-filter:    none;
+    --overlay-filter: none;
   }
 
   /* ── BOM panel ───────────────────────────────────────────────── */
@@ -40,11 +46,14 @@
   #board-svg-container { transition: background 0.3s; }
 
   /* Board fill: edge_cuts paths with fill driven by CSS var */
-  .board-fill { fill: var(--board-fill); stroke: none; pointer-events: none; }
+  .board-fill { fill: var(--board-fill); stroke: var(--board-stroke); stroke-width: 0.35; pointer-events: none; }
   .board-fill * { fill: inherit; stroke: none; }
 
   /* Silkscreen color: invert to white in dark mode */
   [data-layer="f_silks"] { filter: var(--silks-filter); }
+  /* Pad/mask color: invert to silver in dark mode */
+  [data-layer="f_mask"],
+  [data-layer="f_paste"] { filter: var(--mask-filter); }
 
   /* ── board toolbar ───────────────────────────────────────────── */
   #board-toolbar {
@@ -78,7 +87,13 @@
   .fp-overlay:hover { fill: rgba(180, 255, 100, 0.28); stroke: rgba(200, 255, 80, 1.0); }
   .fp-overlay.selected { fill: rgba(80, 200, 255, 0.3); stroke: rgba(80, 210, 255, 1.0); stroke-width: 0.3; }
   .fp-overlay.completed { fill: rgba(80, 110, 160, 0.12); stroke: rgba(100, 140, 200, 0.35); stroke-width: 0.15; }
-  .fp-svg-outline { pointer-events: none; }
+  .fp-svg-outline { pointer-events: none; filter: var(--overlay-filter, none); }
+  .fp-installed {
+    fill: rgba(180, 180, 180, 0.15);
+    stroke: rgba(180, 180, 180, 0.4);
+    stroke-width: 0.2;
+    pointer-events: none;  /* non-interactive */
+  }
   @keyframes fp-pulse {
     0%   { stroke-width: 0.15; }
     50%  { stroke-width: 0.6; stroke: rgba(100, 200, 255, 1.0); }
@@ -147,7 +162,7 @@
         <span class="mask-swatch"        data-fill="rgba(60,0,80,0.35)"   style="background:#3c0050;" title="Purple"></span>
         <span class="mask-swatch"        data-fill="rgba(20,20,20,0.45)"  style="background:#141414;" title="Black"></span>
       </div>
-      <div id="board-svg-container" style="width:100%;height:100%;overflow:hidden;background:#1a1a2e;">
+      <div id="board-svg-container" style="width:100%;height:100%;overflow:hidden;background:#07070f;">
         {{ board_svg | safe }}
       </div>
       <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
@@ -159,8 +174,8 @@
         var root = document.documentElement;
         var container = document.getElementById('board-svg-container');
 
-        var DARK_BG  = '#1a1a2e';
-        var LIGHT_BG = '#c8d8c0';
+        var DARK_BG  = '#07070f';
+        var LIGHT_BG = '#a8b8a0';
 
         // Light mask fills (same palette, lighter)
         var LIGHT_MASK = {
@@ -180,6 +195,10 @@
           root.style.setProperty('--board-fill', fill);
           root.style.setProperty('--silks-filter',
             theme === 'light' ? 'none' : 'invert(1) brightness(2)');
+          root.style.setProperty('--mask-filter',
+            theme === 'light' ? 'none' : 'invert(1) brightness(1.1) sepia(0.15) saturate(0.7)');
+          root.style.setProperty('--overlay-filter',
+            theme === 'light' ? 'none' : 'invert(0.6) sepia(0.1)');
         }
 
         // Restore saved prefs
@@ -251,6 +270,33 @@
   var SORT_KEY = 'bom-sort-' + '{{ slug }}';
   var select = document.getElementById('bom-sort');
 
+  // Humanized value comparator: understands SI prefixes (p/n/u/m/k/K/M/G).
+  // Returns a [isNonNumeric, numericValue, original] tuple for stable sorting.
+  var SI = {p:1e-12, P:1e-12, n:1e-9, N:1e-9, u:1e-6, U:1e-6,
+            m:1e-3, k:1e3, K:1e3, M:1e6, G:1e9};
+  var UNIT_STRIP = /([RFHΩohm]+)$/;
+  var VAL_RE = /^([0-9]*\.?[0-9]+)\s*([pPnNuUmkKMG])?/;
+
+  function humanKey(val) {
+    var s = val.trim().replace(UNIT_STRIP, '');
+    var m = VAL_RE.exec(s);
+    if (!m) return [1, 0, val];
+    var base = parseFloat(m[1]);
+    var mult = m[2] ? (SI[m[2]] || 1) : 1;
+    return [0, base * mult, val];
+  }
+
+  function cmpHuman(a, b) {
+    var ka = humanKey(a), kb = humanKey(b);
+    if (ka[0] !== kb[0]) return ka[0] - kb[0];
+    if (ka[1] !== kb[1]) return ka[1] - kb[1];
+    return ka[2].localeCompare(kb[2]);
+  }
+
+  function cmpRef(a, b) {
+    return a.localeCompare(b, undefined, {numeric: true});
+  }
+
   // Restore saved sort
   var saved = localStorage.getItem(SORT_KEY);
   if (saved) select.value = saved;
@@ -261,17 +307,14 @@
     tbodies.forEach(function(tbody) {
       var rows = Array.from(tbody.querySelectorAll('tr.bom-row'));
       rows.sort(function(a, b) {
-        if (sortBy === 'value') {
-          return a.dataset.value.localeCompare(b.dataset.value, undefined, {numeric: true, sensitivity: 'base'});
-        }
-        return a.dataset.ref.localeCompare(b.dataset.ref, undefined, {numeric: true});
+        return sortBy === 'value'
+          ? cmpHuman(a.dataset.value, b.dataset.value)
+          : cmpRef(a.dataset.ref, b.dataset.ref);
       });
-      // Re-insert rows after the group header
       rows.forEach(function(r) { tbody.appendChild(r); });
     });
   }
 
-  // Apply initial sort
   sortBom(select.value);
   select.addEventListener('change', function () { sortBom(this.value); });
 })();

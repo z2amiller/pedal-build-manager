@@ -39,6 +39,7 @@ class Component(BaseModel):
     rotation: float
     do_not_populate: bool = False
     exclude_from_bom: bool = False
+    installed: bool = False  # True = pre-installed (exclude_from_bom); non-interactive overlay only
     outline: Optional[ComponentOutline] = None
 
 
