@@ -3,9 +3,12 @@ import secrets
 import shutil
 import tempfile
 import zipfile
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.templating import Jinja2Templates
 
 from app import db
 from app.manifest import load_manifest
@@ -13,6 +16,9 @@ from app.storage import BoardStore
 
 router = APIRouter(prefix="/admin")
 security = HTTPBasic()
+
+_templates_dir = Path(__file__).parent.parent / "templates"
+templates = Jinja2Templates(directory=str(_templates_dir))
 
 
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
@@ -25,6 +31,14 @@ def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
             detail="Invalid credentials",
             headers={"WWW-Authenticate": "Basic"},
         )
+
+
+@router.get("/", response_class=HTMLResponse, dependencies=[Depends(verify_admin)])
+def admin_page(request: Request):
+    boards = db.list_boards(request.app.state.db)
+    for board in boards:
+        board["versions"] = db.list_versions(request.app.state.db, board["slug"])
+    return templates.TemplateResponse(request=request, name="admin.html", context={"boards": boards})
 
 
 @router.get("/ping", dependencies=[Depends(verify_admin)])

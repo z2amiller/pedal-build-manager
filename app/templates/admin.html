@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Admin — Pedal Build Manager{% endblock %}
+
+{% block content %}
+<style>
+  .admin-wrap { max-width: 860px; margin: 0 auto; padding: 2rem; }
+  h1 { margin-top: 0; }
+  h2 { margin: 2rem 0 0.75rem; font-size: 1.1rem; text-transform: uppercase;
+       letter-spacing: .05em; color: #555; }
+
+  /* Upload card */
+  .upload-card { border: 1px solid #ddd; border-radius: 6px; padding: 1.25rem 1.5rem; }
+  .upload-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+  input[type=file] { flex: 1; min-width: 0; }
+  button.primary { padding: .45rem 1.1rem; background: #0066cc; color: #fff;
+                   border: none; border-radius: 4px; cursor: pointer; font-size: .9rem; }
+  button.primary:hover { background: #0052a3; }
+  button.primary:disabled { background: #aaa; cursor: default; }
+  #upload-result { margin-top: .75rem; font-size: .9rem; }
+  #upload-result.ok  { color: #1a7a1a; }
+  #upload-result.err { color: #cc0000; }
+
+  /* Boards table */
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th { text-align: left; padding: .5rem .75rem; border-bottom: 2px solid #ddd;
+       background: #f5f5f5; }
+  td { padding: .5rem .75rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  .badge-default { display: inline-block; background: #0066cc; color: #fff;
+                   border-radius: 3px; padding: 1px 6px; font-size: .75rem;
+                   margin-left: .4rem; }
+  button.set-default { padding: .25rem .65rem; font-size: .8rem; background: #fff;
+                       border: 1px solid #aaa; border-radius: 4px; cursor: pointer; }
+  button.set-default:hover { background: #f0f0f0; }
+  .feedback { margin-left: .5rem; font-size: .8rem; color: #1a7a1a; }
+  a.board-link { color: #0066cc; }
+  .empty { color: #888; font-style: italic; padding: 1rem 0; }
+</style>
+
+<div class="admin-wrap">
+  <h1>Admin</h1>
+
+  <h2>Upload Manifest</h2>
+  <div class="upload-card">
+    <form id="upload-form">
+      <div class="upload-row">
+        <input type="file" id="zip-file" accept=".zip" required />
+        <button type="submit" class="primary" id="upload-btn">Upload</button>
+      </div>
+    </form>
+    <div id="upload-result"></div>
+  </div>
+
+  <h2>Boards</h2>
+  <div id="boards-section">
+    {% if boards %}
+    <table>
+      <thead>
+        <tr>
+          <th>Board</th>
+          <th>Version</th>
+          <th>Uploaded</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for board in boards %}
+          {% for v in board.versions %}
+          <tr>
+            {% if loop.first %}
+            <td rowspan="{{ board.versions | length }}">
+              <a class="board-link" href="/board/{{ board.slug }}">{{ board.display_name or board.slug }}</a>
+              <br><small style="color:#888">{{ board.slug }}</small>
+            </td>
+            {% endif %}
+            <td>
+              {{ v.version }}
+              {% if v.version == board.default_version %}
+              <span class="badge-default">default</span>
+              {% endif %}
+            </td>
+            <td>{{ (v.uploaded_at or "")[:10] }}</td>
+            <td>
+              {% if v.version != board.default_version %}
+              <button class="set-default"
+                      onclick="setDefault('{{ board.slug }}', '{{ v.version }}', this)">
+                Set default
+              </button>
+              {% endif %}
+              <span class="feedback" id="fb-{{ board.slug }}-{{ v.version }}"></span>
+            </td>
+          </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No boards uploaded yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.getElementById('upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const file = document.getElementById('zip-file').files[0];
+    if (!file) return;
+
+    const btn = document.getElementById('upload-btn');
+    const result = document.getElementById('upload-result');
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+    result.className = '';
+    result.textContent = '';
+
+    const fd = new FormData();
+    fd.append('file', file);
+
+    try {
+      const resp = await fetch('/admin/upload', { method: 'POST', body: fd });
+      const data = await resp.json();
+      if (resp.ok) {
+        result.className = 'ok';
+        result.textContent = `✓ Uploaded ${data.slug} v${data.version}${data.updated ? ' (updated)' : ''} — `;
+        const a = document.createElement('a');
+        a.href = data.url;
+        a.textContent = 'View board';
+        result.appendChild(a);
+        setTimeout(() => location.reload(), 1200);
+      } else {
+        result.className = 'err';
+        result.textContent = `✗ ${data.detail || 'Upload failed'}`;
+      }
+    } catch (err) {
+      result.className = 'err';
+      result.textContent = `✗ Network error: ${err.message}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Upload';
+    }
+  });
+
+  async function setDefault(slug, version, btn) {
+    btn.disabled = true;
+    const resp = await fetch(`/admin/set-default/${slug}/${version}`, { method: 'POST' });
+    if (resp.ok) {
+      const fb = document.getElementById(`fb-${slug}-${version}`);
+      if (fb) fb.textContent = '✓ Default set';
+      setTimeout(() => location.reload(), 800);
+    } else {
+      btn.disabled = false;
+    }
+  }
+</script>
+{% endblock %}
