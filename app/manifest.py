@@ -59,6 +59,7 @@ class Manifest(BaseModel):
     board_bounds: BoardBounds
     layers: dict[str, str]  # logical name -> svg filename within zip
     components: list[Component]
+    has_blurb: bool = False
 
 
 # ---------------------------------------------------------------------------
@@ -126,6 +127,18 @@ def load_manifest(zip_path: str) -> Manifest:
         raise ValueError(f"Schema validation failed at {path!r}: {first.message}")
 
     return Manifest.model_validate(data)
+
+
+def get_blurb_text(zip_path: str) -> Optional[str]:
+    """Return the contents of blurb.md from the zip, or None if absent."""
+    try:
+        with zipfile.ZipFile(zip_path, "r") as zf:
+            try:
+                return zf.read("blurb.md").decode("utf-8", errors="replace")
+            except KeyError:
+                return None
+    except zipfile.BadZipFile:
+        return None
 
 
 def get_svg_bytes(zip_path: str, svg_filename: str) -> bytes:

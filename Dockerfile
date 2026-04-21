@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir \
     "pydantic>=2.0" \
     "jsonschema>=4.0" \
     "referencing>=0.28" \
+    "markdown>=3.5" \
     "git+https://github.com/z2amiller/kicad-pedal-common.git"
 
 # Copy application code

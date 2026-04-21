@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if manifest %}{{ manifest.display_name or manifest.board_name }} — About{% else %}{{ slug }} — About{% endif %} — Pedal Build Manager
+{% endblock %}
+
+{% block content %}
+<style>
+  .about-wrap {
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1.5rem 4rem;
+    font-family: system-ui, sans-serif;
+    color: #222;
+  }
+  .about-nav {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    color: #666;
+  }
+  .about-nav a { color: #0070c0; text-decoration: none; }
+  .about-nav a:hover { text-decoration: underline; }
+  .about-title { margin: 0 0 0.25rem; }
+  .about-version { color: #666; margin: 0 0 1.5rem; font-size: 0.9rem; }
+  .about-body h1, .about-body h2, .about-body h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+  }
+  .about-body p { line-height: 1.6; margin: 0.6em 0; }
+  .about-body ul, .about-body ol { line-height: 1.6; padding-left: 1.5em; }
+  .about-body code {
+    background: #f3f3f3;
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    font-size: 0.88em;
+  }
+  .about-body pre {
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 0.8em 1em;
+    overflow-x: auto;
+  }
+  .about-body pre code { background: none; padding: 0; }
+  .about-body table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+  }
+  .about-body th, .about-body td {
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    text-align: left;
+  }
+  .about-body th { background: #f0f0f0; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 2rem 0; }
+</style>
+
+<div class="about-wrap">
+  <div class="about-nav">
+    <a href="/board/{{ slug }}/{{ version }}">&larr; Back to build guide</a>
+  </div>
+
+  {% if manifest %}
+    <h1 class="about-title">{{ manifest.display_name or manifest.board_name }}</h1>
+    <p class="about-version">v{{ manifest.version }}</p>
+  {% else %}
+    <h1 class="about-title">{{ slug }}</h1>
+    <p class="about-version">v{{ version }}</p>
+  {% endif %}
+
+  <hr>
+
+  <div class="about-body">
+    {{ blurb_html | safe }}
+  </div>
+</div>
+{% endblock %}

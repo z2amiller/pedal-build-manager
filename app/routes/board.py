@@ -11,7 +11,7 @@ from fastapi.templating import Jinja2Templates
 from kicad_pedal_common.bom import BOM_GROUP_ORDER, bom_group, sort_bom
 
 from app import db
-from app.manifest import Manifest, get_svg_bytes, load_manifest
+from app.manifest import Manifest, get_blurb_text, get_svg_bytes, load_manifest
 from app.storage import BoardStore
 
 router = APIRouter()
@@ -477,5 +477,49 @@ async def board_view(request: Request, slug: str, version: str) -> HTMLResponse:
             "board_svg": board_svg,
             "bom_sorted": bom_sorted,
             "bom_groups": bom_groups,
+        },
+    )
+
+
+@router.get("/board/{slug}/{version}/about", response_class=HTMLResponse)
+async def board_about(request: Request, slug: str, version: str) -> HTMLResponse:
+    """About page: renders blurb.md from the manifest zip as HTML."""
+    store = BoardStore()
+    on_disk = store.zip_path(slug, version)
+    if on_disk.exists():
+        zip_path: str = str(on_disk)
+    else:
+        zip_path = BOARD_STORE.get((slug, version))  # type: ignore[assignment]
+    if zip_path is None:
+        return Response(
+            content=f"Board {slug!r} version {version!r} not found.",
+            status_code=404,
+            media_type="text/plain",
+        )
+
+    raw_md = get_blurb_text(zip_path)
+    if raw_md is None:
+        return Response(
+            content="No about page for this board.",
+            status_code=404,
+            media_type="text/plain",
+        )
+
+    import markdown as _md
+    blurb_html = _md.markdown(raw_md, extensions=["fenced_code", "tables"])
+
+    try:
+        manifest = load_manifest(zip_path)
+    except ValueError:
+        manifest = None
+
+    return templates.TemplateResponse(
+        request=request,
+        name="about.html",
+        context={
+            "slug": slug,
+            "version": version,
+            "manifest": manifest,
+            "blurb_html": blurb_html,
         },
     )
