@@ -1,0 +1,25 @@
+[Unit]
+Description=Pedal Build Manager
+After=network.target
+
+[Service]
+Type=simple
+User=pedalbuild
+Group=pedalbuild
+WorkingDirectory=/opt/pedal-build-manager
+EnvironmentFile=/etc/pedal-build-manager/env
+ExecStart=/opt/pedal-build-manager/venv/bin/uvicorn app.main:app \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 1
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Harden the service a little
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

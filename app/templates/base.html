@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Pedal Build Manager{% endblock %}</title>
+  <script src="https://unpkg.com/htmx.org@2.0.3" defer></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+    }
+
+    .two-panel {
+      display: flex;
+      height: 100vh;
+    }
+
+    .panel-left {
+      width: 320px;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    .panel-right {
+      flex: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+</html>

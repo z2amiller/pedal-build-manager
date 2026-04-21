@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if manifest %}{{ manifest.display_name or manifest.board_name }} {{ manifest.version }}{% else %}{{ slug }} {{ version }}{% endif %} — Pedal Build Manager
+{% endblock %}
+
+{% block content %}
+<style>
+  .bom-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .bom-table th { text-align: left; padding: 4px 8px; border-bottom: 2px solid #ddd; }
+  .bom-table td { padding: 3px 8px; }
+  .bom-row:hover { background: #f5f5f5; cursor: pointer; }
+  .bom-group-header td { background: #e8e8e8; font-weight: 600; padding: 4px 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bom-controls { padding: 8px 1rem; border-bottom: 1px solid #eee; }
+  .board-header { padding: 1rem 1rem 0; }
+  .board-header h2 { margin: 0; }
+  .board-header p { color: #666; margin: 2px 0 0.5rem; }
+  .fp-overlay {
+    fill: rgba(120, 220, 120, 0.12);
+    stroke: rgba(120, 255, 120, 0.75);
+    stroke-width: 0.2;
+    cursor: pointer;
+    transition: fill 0.1s, stroke 0.1s;
+  }
+  .fp-overlay:hover {
+    fill: rgba(180, 255, 100, 0.28);
+    stroke: rgba(200, 255, 80, 1.0);
+  }
+  .fp-overlay.selected {
+    fill: rgba(80, 200, 255, 0.3);
+    stroke: rgba(80, 210, 255, 1.0);
+    stroke-width: 0.3;
+  }
+  .bom-check { width: 28px; text-align: center; }
+  .comp-check { cursor: pointer; }
+  .bom-row.completed { opacity: 0.4; text-decoration: line-through; }
+  .fp-overlay.completed {
+    fill: rgba(80, 110, 160, 0.12);
+    stroke: rgba(100, 140, 200, 0.35);
+    stroke-width: 0.15;
+  }
+  .bom-row.selected { background: rgba(100, 200, 255, 0.15); outline: 1px solid rgba(100, 200, 255, 0.6); }
+  @keyframes fp-pulse {
+    0%   { stroke-width: 0.15; }
+    50%  { stroke-width: 0.6; stroke: rgba(100, 200, 255, 1.0); }
+    100% { stroke-width: 0.15; }
+  }
+  .fp-overlay.pulse { animation: fp-pulse 0.6s ease-out; }
+  /* Hit rect: invisible but captures pointer events across the whole bbox area */
+  .fp-overlay.fp-hit { fill: transparent !important; stroke: none !important; }
+  .bom-row.hidden { display: none; }
+  .bom-group-header.hidden { display: none; }
+</style>
+
+<div class="two-panel">
+  <div class="panel-left" id="bom-panel">
+    <div class="board-header">
+      {% if manifest %}
+        <h2>{{ manifest.display_name or manifest.board_name }}</h2>
+        <p>v{{ manifest.version }}</p>
+      {% else %}
+        <h2>{{ slug }}</h2>
+        <p>v{{ version }}</p>
+      {% endif %}
+    </div>
+
+    <div class="bom-controls">
+      <label>Sort by:
+        <select id="bom-sort">
+          <option value="ref">Reference</option>
+          <option value="value">Value</option>
+        </select>
+      </label>
+      <label style="margin-left:1rem;font-size:0.85rem;"><input type="checkbox" id="hide-completed"> Hide completed</label>
+      <button id="reset-completed" style="float:right;font-size:0.75rem;">Reset all</button>
+    </div>
+
+    <table class="bom-table" id="bom-table">
+      <thead><tr><th></th><th>Ref</th><th>Value</th><th>Footprint</th></tr></thead>
+      {% for group_name, group_items in bom_groups %}
+      <tbody data-group="{{ group_name }}">
+        <tr class="bom-group-header"><td colspan="4">{{ group_name }}</td></tr>
+        {% for item in group_items %}
+        <tr class="bom-row" data-ref="{{ item.ref }}" data-value="{{ item.value }}">
+          <td class="bom-check"><input type="checkbox" class="comp-check" data-ref="{{ item.ref }}"></td>
+          <td class="bom-ref">{{ item.ref }}</td>
+          <td class="bom-value">{{ item.value }}</td>
+          <td class="bom-fp">{{ item.footprint.split(':')[-1] if item.footprint else '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="panel-right" id="board-panel">
+    {% if board_svg %}
+      <div id="board-svg-container" style="width:100%;height:100%;overflow:hidden;background:#1a1a2e;">
+        {{ board_svg | safe }}
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+      <script>
+        (function () {
+          var el = document.getElementById('board-svg');
+          if (!el) return;
+          var panZoom = svgPanZoom(el, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1,
+            maxZoom: 50,
+            dblClickZoomEnabled: false,
+          });
+          // Re-fit on window resize
+          window.addEventListener('resize', function () {
+            panZoom.resize();
+            panZoom.fit();
+            panZoom.center();
+          });
+        })();
+      </script>
+      <script>
+        // Footprint overlay click → emit custom event for bidirectional sync
+        document.getElementById('board-svg').addEventListener('click', function(e) {
+          var shape = e.target.closest('.fp-overlay');
+          if (!shape) return;
+          var ref = shape.dataset.ref;
+          document.dispatchEvent(new CustomEvent('fp:select', {detail: {ref: ref}}));
+        });
+      </script>
+    {% else %}
+      <div style="padding: 1rem; color: #888;">Board SVG unavailable.</div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+(function () {
+  var SORT_KEY = 'bom-sort-' + '{{ slug }}';
+  var select = document.getElementById('bom-sort');
+
+  // Restore saved sort
+  var saved = localStorage.getItem(SORT_KEY);
+  if (saved) select.value = saved;
+
+  function sortBom(sortBy) {
+    localStorage.setItem(SORT_KEY, sortBy);
+    var tbodies = document.querySelectorAll('#bom-table tbody[data-group]');
+    tbodies.forEach(function(tbody) {
+      var rows = Array.from(tbody.querySelectorAll('tr.bom-row'));
+      rows.sort(function(a, b) {
+        if (sortBy === 'value') {
+          return a.dataset.value.localeCompare(b.dataset.value, undefined, {numeric: true, sensitivity: 'base'});
+        }
+        return a.dataset.ref.localeCompare(b.dataset.ref, undefined, {numeric: true});
+      });
+      // Re-insert rows after the group header
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    });
+  }
+
+  // Apply initial sort
+  sortBom(select.value);
+  select.addEventListener('change', function () { sortBom(this.value); });
+})();
+</script>
+
+<script>
+(function () {
+  var STORE_KEY = 'builder:{{ slug }}:{{ version }}';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  }
+
+  function applyState(state) {
+    document.querySelectorAll('.comp-check').forEach(function (cb) {
+      var ref = cb.dataset.ref;
+      var done = !!state[ref];
+      cb.checked = done;
+      // Dim BOM row
+      var row = cb.closest('tr.bom-row');
+      if (row) row.classList.toggle('completed', done);
+      // Recolor footprint overlay
+      var fp = document.querySelector('.fp-overlay[data-ref="' + ref + '"]');
+      if (fp) fp.classList.toggle('completed', done);
+    });
+    document.dispatchEvent(new CustomEvent('completion:changed'));
+  }
+
+  // Restore on load
+  applyState(loadState());
+
+  // Checkbox change handler
+  document.getElementById('bom-table').addEventListener('change', function (e) {
+    if (!e.target.classList.contains('comp-check')) return;
+    var state = loadState();
+    var ref = e.target.dataset.ref;
+    if (e.target.checked) {
+      state[ref] = true;
+    } else {
+      delete state[ref];
+    }
+    saveState(state);
+    applyState(state);
+  });
+
+  // Reset all
+  var resetBtn = document.getElementById('reset-completed');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      if (!confirm('Reset all completed components for this board?')) return;
+      localStorage.removeItem(STORE_KEY);
+      applyState({});
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  // --- helpers ---
+  function selectRef(ref) {
+    // Clear previous selection
+    document.querySelectorAll('.bom-row.selected').forEach(function (r) {
+      r.classList.remove('selected');
+    });
+    document.querySelectorAll('.fp-overlay.selected').forEach(function (r) {
+      r.classList.remove('selected');
+    });
+
+    if (!ref) return;
+
+    // Highlight BOM row + scroll into view
+    var bomRow = document.querySelector('.bom-row[data-ref="' + ref + '"]');
+    if (bomRow) {
+      bomRow.classList.add('selected');
+      bomRow.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+    }
+
+    // Highlight + pulse footprint overlay
+    var fp = document.querySelector('.fp-overlay[data-ref="' + ref + '"]');
+    if (fp) {
+      fp.classList.add('selected');
+      fp.classList.add('pulse');
+      setTimeout(function () { fp.classList.remove('pulse'); }, 600);
+    }
+  }
+
+  var _selectedRef = null;
+
+  // --- board → BOM: listen for fp:select custom event ---
+  document.addEventListener('fp:select', function (e) {
+    var ref = e.detail && e.detail.ref;
+    if (ref === _selectedRef) {
+      // Toggle off
+      selectRef(null);
+      _selectedRef = null;
+    } else {
+      selectRef(ref);
+      _selectedRef = ref;
+    }
+  });
+
+  // --- BOM → board: click on bom-row ---
+  document.getElementById('bom-table').addEventListener('click', function (e) {
+    // Don't intercept checkbox clicks
+    if (e.target.type === 'checkbox') return;
+    var row = e.target.closest('.bom-row');
+    if (!row) {
+      // Click on empty area → deselect
+      selectRef(null);
+      _selectedRef = null;
+      return;
+    }
+    var ref = row.dataset.ref;
+    if (ref === _selectedRef) {
+      selectRef(null);
+      _selectedRef = null;
+    } else {
+      selectRef(ref);
+      _selectedRef = ref;
+    }
+  });
+
+  // --- Arrow key navigation in BOM ---
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+    // Only if focus is in the BOM panel or a row is already selected
+    var rows = Array.from(document.querySelectorAll('.bom-row'));
+    if (rows.length === 0) return;
+    var idx = rows.findIndex(function (r) { return r.dataset.ref === _selectedRef; });
+    if (e.key === 'ArrowDown') {
+      idx = (idx + 1) % rows.length;
+    } else {
+      idx = (idx - 1 + rows.length) % rows.length;
+    }
+    var ref = rows[idx].dataset.ref;
+    selectRef(ref);
+    _selectedRef = ref;
+    e.preventDefault();
+  });
+
+  // --- Click on board background (not a footprint) → deselect ---
+  var boardSvg = document.getElementById('board-svg');
+  if (boardSvg) {
+    boardSvg.addEventListener('click', function (e) {
+      if (!e.target.closest('.fp-overlay')) {
+        selectRef(null);
+        _selectedRef = null;
+      }
+    });
+  }
+})();
+</script>
+
+<script>
+// Hide-completed filter
+(function () {
+  var HIDE_KEY = 'hide-completed:{{ slug }}:{{ version }}';
+  var toggle = document.getElementById('hide-completed');
+  if (!toggle) return;
+
+  toggle.checked = localStorage.getItem(HIDE_KEY) === '1';
+
+  function applyFilter() {
+    localStorage.setItem(HIDE_KEY, toggle.checked ? '1' : '0');
+    var tbodies = document.querySelectorAll('#bom-table tbody[data-group]');
+    tbodies.forEach(function (tbody) {
+      var rows = tbody.querySelectorAll('tr.bom-row');
+      var visible = 0;
+      rows.forEach(function (row) {
+        var hide = toggle.checked && row.classList.contains('completed');
+        row.classList.toggle('hidden', hide);
+        if (!hide) visible++;
+      });
+      var header = tbody.querySelector('tr.bom-group-header');
+      if (header) header.classList.toggle('hidden', visible === 0);
+    });
+  }
+
+  applyFilter();
+  toggle.addEventListener('change', applyFilter);
+  document.addEventListener('completion:changed', applyFilter);
+})();
+</script>
+
+<script>
+// Double-click footprint on board → toggle completion
+(function () {
+  var boardSvg = document.getElementById('board-svg');
+  if (!boardSvg) return;
+  boardSvg.addEventListener('dblclick', function (e) {
+    e.preventDefault();
+    var shape = e.target.closest('.fp-overlay');
+    if (!shape) return;
+    var ref = shape.dataset.ref;
+    var cb = document.querySelector('.comp-check[data-ref="' + ref + '"]');
+    if (!cb) return;
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change', {bubbles: true}));
+    // Pulse feedback independent of selection state
+    shape.classList.remove('pulse');
+    void shape.offsetWidth; // force reflow to restart animation
+    shape.classList.add('pulse');
+    setTimeout(function () { shape.classList.remove('pulse'); }, 600);
+  });
+})();
+</script>
+{% endblock %}

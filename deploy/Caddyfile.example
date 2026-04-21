@@ -1,0 +1,10 @@
+example.com {
+    reverse_proxy localhost:8000
+
+    # Strip Basic auth credentials before forwarding to the app — the app
+    # handles its own credential validation via ADMIN_PASSWORD.
+    @admin path /admin/*
+    handle @admin {
+        reverse_proxy localhost:8000
+    }
+}
