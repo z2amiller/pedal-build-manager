@@ -37,6 +37,8 @@ _OUTER_SVG_RE = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 _CLOSE_SVG_RE = re.compile(r"</svg\s*>", re.IGNORECASE)
+# Strips inline style= attributes so CSS fill/stroke can cascade into the symbol.
+_STYLE_ATTR_RE = re.compile(r'\s+style="[^"]*"', re.IGNORECASE)
 
 
 def _strip_svg_wrapper(svg_text: str) -> str:
@@ -64,6 +66,19 @@ def _compose_svg(manifest: Manifest, zip_path: str) -> str:
     layer_translate = "translate({:.4f},{:.4f})".format(-bb.x, -bb.y)
 
     layers_html: list[str] = []
+
+    # Board fill: edge_cuts paths with styles stripped so CSS var controls color.
+    edge_cuts_filename = manifest.layers.get("edge_cuts")
+    if edge_cuts_filename:
+        try:
+            raw = get_svg_bytes(zip_path, edge_cuts_filename).decode("utf-8", errors="replace")
+            inner = _STYLE_ATTR_RE.sub("", _strip_svg_wrapper(raw))
+            layers_html.append(
+                f'  <g class="board-fill" transform="{layer_translate}">\n{inner}\n  </g>'
+            )
+        except ValueError:
+            pass
+
     for layer_key in _LAYER_ORDER:
         svg_filename = manifest.layers.get(layer_key)
         if svg_filename is None:
@@ -91,21 +106,15 @@ def _compose_svg(manifest: Manifest, zip_path: str) -> str:
         outline = comp.outline
 
         if outline.type == "svg" and outline.overlay_svg:
-            # Load the per-footprint overlay SVG and emit it as a <symbol>.
-            symbol_id = "fp-sym-" + re.sub(r"[^a-zA-Z0-9_\-]", "_", outline.overlay_svg)
-            if symbol_id not in seen_symbols:
-                seen_symbols.add(symbol_id)
+            # --- Visual outline symbol (kicad-cli art, no pointer events) ---
+            sym_outline = "fp-sym-" + re.sub(r"[^a-zA-Z0-9_\-]", "_", outline.overlay_svg)
+            if sym_outline not in seen_symbols:
+                seen_symbols.add(sym_outline)
                 try:
                     raw = get_svg_bytes(zip_path, outline.overlay_svg).decode(
                         "utf-8", errors="replace"
                     )
                     inner = _strip_svg_wrapper(raw)
-                    # Find the viewBox so we can pre-center the symbol.
-                    # kicad-cli exports footprint SVGs with the footprint's
-                    # origin at approximately (vb_w/2, vb_h/2) — NOT at (0,0).
-                    # We wrap the content in a translate(-vb_w/2, -vb_h/2) so
-                    # the symbol's (0,0) lands at the footprint anchor, and
-                    # the <use> translate(pos_x, pos_y) is then correct.
                     vb_w, vb_h = 0.0, 0.0
                     vb_match = _OUTER_SVG_RE.search(raw)
                     if vb_match:
@@ -115,7 +124,6 @@ def _compose_svg(manifest: Manifest, zip_path: str) -> str:
                             if len(parts) == 4:
                                 vb_w = float(parts[2])
                                 vb_h = float(parts[3])
-                    # Use stored anchor if available; fall back to viewBox centre.
                     cx = outline.anchor_x if outline.anchor_x is not None else vb_w / 2
                     cy = outline.anchor_y if outline.anchor_y is not None else vb_h / 2
                     centered = '<g transform="translate({:.4f},{:.4f})">{}</g>'.format(
@@ -123,38 +131,73 @@ def _compose_svg(manifest: Manifest, zip_path: str) -> str:
                     )
                     symbol_defs.append(
                         '<symbol id="{}" overflow="visible">{}</symbol>'.format(
-                            symbol_id, centered
+                            sym_outline, centered
                         )
                     )
                 except Exception:
-                    symbol_id = ""
+                    sym_outline = ""
 
-            if symbol_id:
-                transform = "translate({x:.4f},{y:.4f}) rotate({r:.4f})".format(
-                    x=comp.pos_x, y=comp.pos_y, r=-comp.rotation
+            # --- Courtyard symbol (style-stripped so CSS fill/stroke cascades in) ---
+            sym_cyd = ""
+            if outline.courtyard_svg:
+                sym_cyd = "fp-cyd-" + re.sub(r"[^a-zA-Z0-9_\-]", "_", outline.courtyard_svg)
+                if sym_cyd not in seen_symbols:
+                    seen_symbols.add(sym_cyd)
+                    try:
+                        raw = get_svg_bytes(zip_path, outline.courtyard_svg).decode(
+                            "utf-8", errors="replace"
+                        )
+                        inner = _STYLE_ATTR_RE.sub("", _strip_svg_wrapper(raw))
+                        vb_w, vb_h = 0.0, 0.0
+                        vb_match = _OUTER_SVG_RE.search(raw)
+                        if vb_match:
+                            m = re.search(r'viewBox="([^"]+)"', vb_match.group(0), re.IGNORECASE)
+                            if m:
+                                parts = m.group(1).split()
+                                if len(parts) == 4:
+                                    vb_w = float(parts[2])
+                                    vb_h = float(parts[3])
+                        cx = outline.anchor_x if outline.anchor_x is not None else vb_w / 2
+                        cy = outline.anchor_y if outline.anchor_y is not None else vb_h / 2
+                        centered = '<g transform="translate({:.4f},{:.4f})">{}</g>'.format(
+                            -cx, -cy, inner
+                        )
+                        symbol_defs.append(
+                            '<symbol id="{}" overflow="visible">{}</symbol>'.format(
+                                sym_cyd, centered
+                            )
+                        )
+                    except Exception:
+                        sym_cyd = ""
+
+            transform = "translate({x:.4f},{y:.4f}) rotate({r:.4f})".format(
+                x=comp.pos_x, y=comp.pos_y, r=-comp.rotation
+            )
+            if sym_outline:
+                overlay_shapes.append(
+                    '<use class="fp-svg-outline" data-ref="{ref}"'
+                    ' href="#{sym}" transform="{t}"/>'.format(
+                        ref=comp.ref, sym=sym_outline, t=transform
+                    )
                 )
+            # Courtyard shape carries all interactive CSS state.
+            # Falling back to a bbox rect if courtyard SVG is unavailable.
+            if sym_cyd:
                 overlay_shapes.append(
                     '<use class="fp-overlay" data-ref="{ref}"'
                     ' href="#{sym}" transform="{t}"/>'.format(
-                        ref=comp.ref, sym=symbol_id, t=transform
+                        ref=comp.ref, sym=sym_cyd, t=transform
                     )
                 )
-
-            # Bounding-box hit target centered on the footprint anchor.
-            # Uses fp-overlay class so JS click handlers fire on the whole area.
-            # fill="transparent" (not "none") so the rect captures pointer events.
-            if outline.bbox:
+            elif outline.bbox:
                 bw = outline.bbox.get("w", 0)
                 bh = outline.bbox.get("h", 0)
                 ax = outline.anchor_x if outline.anchor_x is not None else bw / 2
                 ay = outline.anchor_y if outline.anchor_y is not None else bh / 2
-                transform = "translate({x:.4f},{y:.4f}) rotate({r:.4f})".format(
-                    x=comp.pos_x, y=comp.pos_y, r=-comp.rotation
-                )
                 overlay_shapes.append(
-                    '<rect class="fp-overlay fp-hit" data-ref="{ref}"'
+                    '<rect class="fp-overlay" data-ref="{ref}"'
                     ' x="{bx:.4f}" y="{by:.4f}" width="{bw:.4f}" height="{bh:.4f}"'
-                    ' transform="{t}" fill="transparent" stroke="none"/>'.format(
+                    ' rx="0.2" ry="0.2" transform="{t}"/>'.format(
                         ref=comp.ref, bx=-ax, by=-ay, bw=bw, bh=bh, t=transform
                     )
                 )

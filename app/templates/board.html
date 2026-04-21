@@ -6,48 +6,91 @@
 
 {% block content %}
 <style>
+  /* ── theme variables ─────────────────────────────────────────── */
+  :root {
+    --board-bg:        #1a1a2e;
+    --board-fill:      rgba(0, 80, 20, 0.28);
+    --silks-filter:    invert(1) brightness(2);
+    --bom-bg:          #fff;
+    --bom-text:        #222;
+    --bom-hover:       #f5f5f5;
+    --bom-header-bg:   #e8e8e8;
+    --bom-border:      #ddd;
+    --bom-group-bg:    #e8e8e8;
+    --bom-selected-bg: rgba(100,200,255,0.15);
+  }
+  [data-theme="light"] {
+    --board-bg:      #c8d8c0;
+    --board-fill:    rgba(0, 100, 30, 0.18);
+    --silks-filter:  none;
+  }
+
+  /* ── BOM panel ───────────────────────────────────────────────── */
   .bom-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  .bom-table th { text-align: left; padding: 4px 8px; border-bottom: 2px solid #ddd; }
+  .bom-table th { text-align: left; padding: 4px 8px; border-bottom: 2px solid var(--bom-border); }
   .bom-table td { padding: 3px 8px; }
-  .bom-row:hover { background: #f5f5f5; cursor: pointer; }
-  .bom-group-header td { background: #e8e8e8; font-weight: 600; padding: 4px 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .bom-controls { padding: 8px 1rem; border-bottom: 1px solid #eee; }
+  .bom-row:hover { background: var(--bom-hover); cursor: pointer; }
+  .bom-group-header td { background: var(--bom-group-bg); font-weight: 600; padding: 4px 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bom-controls { padding: 8px 1rem; border-bottom: 1px solid var(--bom-border); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
   .board-header { padding: 1rem 1rem 0; }
   .board-header h2 { margin: 0; }
   .board-header p { color: #666; margin: 2px 0 0.5rem; }
+
+  /* ── board panel ─────────────────────────────────────────────── */
+  #board-svg-container { transition: background 0.3s; }
+
+  /* Board fill: edge_cuts paths with fill driven by CSS var */
+  .board-fill { fill: var(--board-fill); stroke: none; pointer-events: none; }
+  .board-fill * { fill: inherit; stroke: none; }
+
+  /* Silkscreen color: invert to white in dark mode */
+  [data-layer="f_silks"] { filter: var(--silks-filter); }
+
+  /* ── board toolbar ───────────────────────────────────────────── */
+  #board-toolbar {
+    position: absolute; top: 8px; right: 8px; z-index: 10;
+    display: flex; gap: 6px; align-items: center;
+    background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+    border-radius: 6px; padding: 4px 8px;
+  }
+  #board-toolbar button, #board-toolbar label {
+    font-size: 0.72rem; color: #ddd; background: transparent;
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 2px 7px; cursor: pointer; white-space: nowrap;
+  }
+  #board-toolbar button:hover { background: rgba(255,255,255,0.15); }
+  .mask-swatch {
+    display: inline-block; width: 14px; height: 14px;
+    border-radius: 3px; border: 1px solid rgba(255,255,255,0.4);
+    cursor: pointer; vertical-align: middle;
+  }
+  .mask-swatch.active { outline: 2px solid #fff; outline-offset: 1px; }
+
+  /* ── footprint overlays ──────────────────────────────────────── */
   .fp-overlay {
     fill: rgba(120, 220, 120, 0.12);
     stroke: rgba(120, 255, 120, 0.75);
     stroke-width: 0.2;
     cursor: pointer;
+    pointer-events: bounding-box;
     transition: fill 0.1s, stroke 0.1s;
   }
-  .fp-overlay:hover {
-    fill: rgba(180, 255, 100, 0.28);
-    stroke: rgba(200, 255, 80, 1.0);
-  }
-  .fp-overlay.selected {
-    fill: rgba(80, 200, 255, 0.3);
-    stroke: rgba(80, 210, 255, 1.0);
-    stroke-width: 0.3;
-  }
-  .bom-check { width: 28px; text-align: center; }
-  .comp-check { cursor: pointer; }
-  .bom-row.completed { opacity: 0.4; text-decoration: line-through; }
-  .fp-overlay.completed {
-    fill: rgba(80, 110, 160, 0.12);
-    stroke: rgba(100, 140, 200, 0.35);
-    stroke-width: 0.15;
-  }
-  .bom-row.selected { background: rgba(100, 200, 255, 0.15); outline: 1px solid rgba(100, 200, 255, 0.6); }
+  .fp-overlay:hover { fill: rgba(180, 255, 100, 0.28); stroke: rgba(200, 255, 80, 1.0); }
+  .fp-overlay.selected { fill: rgba(80, 200, 255, 0.3); stroke: rgba(80, 210, 255, 1.0); stroke-width: 0.3; }
+  .fp-overlay.completed { fill: rgba(80, 110, 160, 0.12); stroke: rgba(100, 140, 200, 0.35); stroke-width: 0.15; }
+  .fp-svg-outline { pointer-events: none; }
   @keyframes fp-pulse {
     0%   { stroke-width: 0.15; }
     50%  { stroke-width: 0.6; stroke: rgba(100, 200, 255, 1.0); }
     100% { stroke-width: 0.15; }
   }
   .fp-overlay.pulse { animation: fp-pulse 0.6s ease-out; }
-  /* Hit rect: invisible but captures pointer events across the whole bbox area */
-  .fp-overlay.fp-hit { fill: transparent !important; stroke: none !important; }
+
+  /* ── BOM states ──────────────────────────────────────────────── */
+  .bom-check { width: 28px; text-align: center; }
+  .comp-check { cursor: pointer; }
+  .bom-row.completed { opacity: 0.4; text-decoration: line-through; }
+  .bom-row.selected { background: var(--bom-selected-bg); outline: 1px solid rgba(100,200,255,0.6); }
   .bom-row.hidden { display: none; }
   .bom-group-header.hidden { display: none; }
 </style>
@@ -93,12 +136,80 @@
     </table>
   </div>
 
-  <div class="panel-right" id="board-panel">
+  <div class="panel-right" id="board-panel" style="position:relative;">
     {% if board_svg %}
+      <div id="board-toolbar">
+        <button id="theme-toggle">☀ Light</button>
+        <span style="color:#aaa;font-size:0.7rem;">mask:</span>
+        <span class="mask-swatch active" data-fill="rgba(0,80,20,0.28)"   style="background:#004010;" title="Green"></span>
+        <span class="mask-swatch"        data-fill="rgba(0,30,100,0.35)"  style="background:#001e64;" title="Blue"></span>
+        <span class="mask-swatch"        data-fill="rgba(90,0,0,0.35)"    style="background:#5a0000;" title="Red"></span>
+        <span class="mask-swatch"        data-fill="rgba(60,0,80,0.35)"   style="background:#3c0050;" title="Purple"></span>
+        <span class="mask-swatch"        data-fill="rgba(20,20,20,0.45)"  style="background:#141414;" title="Black"></span>
+      </div>
       <div id="board-svg-container" style="width:100%;height:100%;overflow:hidden;background:#1a1a2e;">
         {{ board_svg | safe }}
       </div>
       <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+      <script>
+      // ── Theme + soldermask toolbar ────────────────────────────────────
+      (function () {
+        var THEME_KEY = 'board-theme:{{ slug }}';
+        var MASK_KEY  = 'board-mask:{{ slug }}';
+        var root = document.documentElement;
+        var container = document.getElementById('board-svg-container');
+
+        var DARK_BG  = '#1a1a2e';
+        var LIGHT_BG = '#c8d8c0';
+
+        // Light mask fills (same palette, lighter)
+        var LIGHT_MASK = {
+          'rgba(0,80,20,0.28)':   'rgba(0,110,30,0.18)',
+          'rgba(0,30,100,0.35)':  'rgba(0,50,160,0.20)',
+          'rgba(90,0,0,0.35)':    'rgba(140,0,0,0.20)',
+          'rgba(60,0,80,0.35)':   'rgba(90,0,120,0.20)',
+          'rgba(20,20,20,0.45)':  'rgba(30,30,30,0.25)',
+        };
+
+        function applyTheme(theme, maskFill) {
+          root.setAttribute('data-theme', theme);
+          container.style.background = theme === 'light' ? LIGHT_BG : DARK_BG;
+          document.getElementById('theme-toggle').textContent =
+            theme === 'light' ? '🌙 Dark' : '☀ Light';
+          var fill = theme === 'light' ? (LIGHT_MASK[maskFill] || maskFill) : maskFill;
+          root.style.setProperty('--board-fill', fill);
+          root.style.setProperty('--silks-filter',
+            theme === 'light' ? 'none' : 'invert(1) brightness(2)');
+        }
+
+        // Restore saved prefs
+        var savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+        var savedMask  = localStorage.getItem(MASK_KEY)  || 'rgba(0,80,20,0.28)';
+
+        // Mark active swatch
+        document.querySelectorAll('.mask-swatch').forEach(function(s) {
+          s.classList.toggle('active', s.dataset.fill === savedMask);
+        });
+        applyTheme(savedTheme, savedMask);
+
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+          var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          localStorage.setItem(THEME_KEY, next);
+          applyTheme(next, savedMask);
+        });
+
+        document.querySelectorAll('.mask-swatch').forEach(function(s) {
+          s.addEventListener('click', function() {
+            savedMask = s.dataset.fill;
+            localStorage.setItem(MASK_KEY, savedMask);
+            document.querySelectorAll('.mask-swatch').forEach(function(x) {
+              x.classList.toggle('active', x === s);
+            });
+            applyTheme(root.getAttribute('data-theme'), savedMask);
+          });
+        });
+      })();
+      </script>
       <script>
         (function () {
           var el = document.getElementById('board-svg');
