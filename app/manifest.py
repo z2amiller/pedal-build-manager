@@ -61,6 +61,7 @@ class Manifest(BaseModel):
     components: list[Component]
     has_blurb: bool = False
     drill_holes: list[dict[str, Any]] = []
+    enclosure_holes: list[dict[str, Any]] = []
 
 
 # ---------------------------------------------------------------------------

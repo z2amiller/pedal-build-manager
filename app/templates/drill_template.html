@@ -110,26 +110,22 @@
             height="{{ "%.4f"|format(manifest.board_bounds.height - 0.5) }}"
             fill="none" stroke="#333" stroke-width="0.25" stroke-dasharray="1 0.5"/>
 
-      {# Drill holes — circle = plated (PTH), X = NPTH #}
-      {% for h in manifest.drill_holes %}
+      {# Enclosure control holes — open circle with crosshair and label #}
+      {% for h in manifest.enclosure_holes %}
         {% set r = h.diameter_mm / 2 %}
-        {% if h.get("plated", true) %}
-          {# PTH: open circle with crosshair #}
-          <circle cx="{{ "%.4f"|format(h.x_mm) }}" cy="{{ "%.4f"|format(h.y_mm) }}"
-                  r="{{ "%.4f"|format(r) }}"
-                  fill="none" stroke="#000" stroke-width="0.12"/>
-          <line x1="{{ "%.4f"|format(h.x_mm - r - 0.5) }}" y1="{{ "%.4f"|format(h.y_mm) }}"
-                x2="{{ "%.4f"|format(h.x_mm + r + 0.5) }}" y2="{{ "%.4f"|format(h.y_mm) }}"
-                stroke="#999" stroke-width="0.06"/>
-          <line x1="{{ "%.4f"|format(h.x_mm) }}" y1="{{ "%.4f"|format(h.y_mm - r - 0.5) }}"
-                x2="{{ "%.4f"|format(h.x_mm) }}" y2="{{ "%.4f"|format(h.y_mm + r + 0.5) }}"
-                stroke="#999" stroke-width="0.06"/>
-        {% else %}
-          {# NPTH: filled grey circle (mounting hole) #}
-          <circle cx="{{ "%.4f"|format(h.x_mm) }}" cy="{{ "%.4f"|format(h.y_mm) }}"
-                  r="{{ "%.4f"|format(r) }}"
-                  fill="#aaa" stroke="#555" stroke-width="0.12"/>
-        {% endif %}
+        <circle cx="{{ "%.4f"|format(h.x_mm) }}" cy="{{ "%.4f"|format(h.y_mm) }}"
+                r="{{ "%.4f"|format(r) }}"
+                fill="none" stroke="#000" stroke-width="0.2"/>
+        <line x1="{{ "%.4f"|format(h.x_mm - r - 1) }}" y1="{{ "%.4f"|format(h.y_mm) }}"
+              x2="{{ "%.4f"|format(h.x_mm + r + 1) }}" y2="{{ "%.4f"|format(h.y_mm) }}"
+              stroke="#bbb" stroke-width="0.08"/>
+        <line x1="{{ "%.4f"|format(h.x_mm) }}" y1="{{ "%.4f"|format(h.y_mm - r - 1) }}"
+              x2="{{ "%.4f"|format(h.x_mm) }}" y2="{{ "%.4f"|format(h.y_mm + r + 1) }}"
+              stroke="#bbb" stroke-width="0.08"/>
+        <text x="{{ "%.4f"|format(h.x_mm) }}" y="{{ "%.4f"|format(h.y_mm + r + 2.8) }}"
+              text-anchor="middle" font-size="2" font-family="sans-serif" fill="#333">
+          {{ h.get("label","") }} ⌀{{ "%.1f"|format(h.diameter_mm) }}
+        </text>
       {% endfor %}
 
       {# Alignment corner marks #}
@@ -148,19 +144,18 @@
   </div>
 
   {# Hole index table #}
-  {% if manifest.drill_holes %}
+  {% if manifest.enclosure_holes %}
   <table class="hole-table">
     <thead>
-      <tr><th>Ref</th><th>Diameter (mm)</th><th>X (mm)</th><th>Y (mm)</th><th>Type</th></tr>
+      <tr><th>Label</th><th>Diameter (mm)</th><th>X (mm)</th><th>Y (mm)</th></tr>
     </thead>
     <tbody>
-      {% for h in manifest.drill_holes | sort(attribute="diameter_mm") | sort(attribute="label") %}
+      {% for h in manifest.enclosure_holes | sort(attribute="label") %}
       <tr>
         <td>{{ h.get("label", "") }}</td>
         <td>{{ "%.2f"|format(h.diameter_mm) }}</td>
         <td>{{ "%.2f"|format(h.x_mm) }}</td>
         <td>{{ "%.2f"|format(h.y_mm) }}</td>
-        <td>{% if h.get("plated", true) %}PTH{% else %}NPTH{% endif %}{% if h.get("oval") %} (slot){% endif %}</td>
       </tr>
       {% endfor %}
     </tbody>

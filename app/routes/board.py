@@ -550,9 +550,9 @@ async def drill_template(request: Request, slug: str, version: str) -> HTMLRespo
             media_type="text/plain",
         )
 
-    if not manifest.drill_holes:
+    if not manifest.enclosure_holes:
         return Response(
-            content="No drill data in this manifest. Re-export with manifest-creator >= 0.3.",
+            content="No enclosure drill data in this manifest. Re-export with manifest-creator >= 0.3.",
             status_code=404,
             media_type="text/plain",
         )
