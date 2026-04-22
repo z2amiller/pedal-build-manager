@@ -118,3 +118,19 @@ venv/bin/pip install --upgrade pip
 venv/bin/pip install ".[dev]"
 systemctl restart pedal-build-manager
 ```
+
+## Uploading boards
+
+Use `manifest-creator` with `--upload-to` pointing at the **base URL** of the
+server (no path). The CLI appends `/admin/upload` automatically:
+
+```bash
+python3 -m manifest_creator \
+    --board fx-bloodyg.kicad_pcb \
+    --out fx-bloodyg-1.0.0.manifest.zip \
+    --version 1.0.0 \
+    --upload-to https://your-domain.com \
+    --password <admin-password>
+```
+
+Or set `MANIFEST_ADMIN_PASSWORD` in your environment and omit `--password`.
