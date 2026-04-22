@@ -115,7 +115,7 @@
     <div class="board-header">
       {% if manifest %}
         <h2>{{ manifest.display_name or manifest.board_name }}</h2>
-        <p>v{{ manifest.version }}{% if manifest.has_blurb %} &mdash; <a href="/board/{{ slug }}/{{ version }}/about">About</a>{% endif %}</p>
+        <p>v{{ manifest.version }}{% if manifest.has_blurb %} &mdash; <a href="/board/{{ slug }}/{{ version }}/about">About</a>{% endif %}{% if manifest.drill_holes %} &mdash; <a href="/board/{{ slug }}/{{ version }}/drill-template">Drill template</a>{% endif %}</p>
       {% else %}
         <h2>{{ slug }}</h2>
         <p>v{{ version }}</p>

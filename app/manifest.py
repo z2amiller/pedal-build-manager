@@ -60,6 +60,7 @@ class Manifest(BaseModel):
     layers: dict[str, str]  # logical name -> svg filename within zip
     components: list[Component]
     has_blurb: bool = False
+    drill_holes: list[dict[str, Any]] = []
 
 
 # ---------------------------------------------------------------------------

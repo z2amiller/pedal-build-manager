@@ -523,3 +523,46 @@ async def board_about(request: Request, slug: str, version: str) -> HTMLResponse
             "blurb_html": blurb_html,
         },
     )
+
+
+@router.get("/board/{slug}/{version}/drill-template", response_class=HTMLResponse)
+async def drill_template(request: Request, slug: str, version: str) -> HTMLResponse:
+    """Printable 1:1 drill template showing all PTH/NPTH hole positions."""
+    store = BoardStore()
+    on_disk = store.zip_path(slug, version)
+    if on_disk.exists():
+        zip_path: str = str(on_disk)
+    else:
+        zip_path = BOARD_STORE.get((slug, version))  # type: ignore[assignment]
+    if zip_path is None:
+        return Response(
+            content=f"Board {slug!r} version {version!r} not found.",
+            status_code=404,
+            media_type="text/plain",
+        )
+
+    try:
+        manifest = load_manifest(zip_path)
+    except ValueError as exc:
+        return Response(
+            content=f"Failed to load manifest: {exc}",
+            status_code=500,
+            media_type="text/plain",
+        )
+
+    if not manifest.drill_holes:
+        return Response(
+            content="No drill data in this manifest. Re-export with manifest-creator >= 0.3.",
+            status_code=404,
+            media_type="text/plain",
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="drill_template.html",
+        context={
+            "slug": slug,
+            "version": version,
+            "manifest": manifest,
+        },
+    )
