@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from kicad_pedal_common.bom import BOM_GROUP_ORDER, bom_group, sort_bom
 
@@ -470,6 +470,9 @@ async def board_view(request: Request, slug: str, version: str) -> HTMLResponse:
         group_buckets[bom_group(entry["ref"])].append(entry)
     bom_groups = [(name, items) for name, items in group_buckets.items() if items]
 
+    store_for_pdf = BoardStore()
+    has_pdf = store_for_pdf.pdf_path(slug, version).exists()
+
     return templates.TemplateResponse(
         request=request,
         name="board.html",
@@ -480,8 +483,19 @@ async def board_view(request: Request, slug: str, version: str) -> HTMLResponse:
             "board_svg": board_svg,
             "bom_sorted": bom_sorted,
             "bom_groups": bom_groups,
+            "has_pdf": has_pdf,
         },
     )
+
+
+@router.get("/board/{slug}/{version}/build-doc.pdf")
+async def board_pdf(slug: str, version: str) -> FileResponse:
+    """Serve the uploaded PDF build document."""
+    store = BoardStore()
+    pdf = store.pdf_path(slug, version)
+    if not pdf.exists():
+        return Response(content="No PDF build document for this board.", status_code=404, media_type="text/plain")  # type: ignore[return-value]
+    return FileResponse(str(pdf), media_type="application/pdf", filename=f"{slug}-{version}-build-doc.pdf")
 
 
 @router.get("/board/{slug}/{version}/about", response_class=HTMLResponse)

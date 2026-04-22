@@ -52,6 +52,37 @@ def set_default(slug: str, version: str, request: Request):
     return {"slug": slug, "default_version": version}
 
 
+@router.post("/upload-pdf", dependencies=[Depends(verify_admin)])
+async def upload_pdf(request: Request, file: UploadFile = File(...)):
+    """Accept a PDF build document for an already-uploaded board version."""
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=422, detail="File must be a .pdf")
+
+    content = await file.read()
+
+    # Expect filename like "fx-bloodyg-1.0.0.pdf" → slug + version embedded,
+    # but we just need the user to tell us slug+version via query params or
+    # we sniff from the manifest store.  Simplest: require slug + version fields.
+    slug = request.query_params.get("slug")
+    version = request.query_params.get("version")
+    if not slug or not version:
+        raise HTTPException(status_code=422, detail="slug and version query params required")
+
+    store = BoardStore()
+    try:
+        board_dir = store.board_path(slug, version)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+    if not board_dir.exists():
+        raise HTTPException(status_code=404, detail=f"Board {slug!r} v{version!r} not found — upload the manifest first")
+
+    pdf_path = store.pdf_path(slug, version)
+    pdf_path.write_bytes(content)
+
+    return {"slug": slug, "version": version, "url": f"/board/{slug}/{version}/build-doc.pdf"}
+
+
 @router.post("/upload", dependencies=[Depends(verify_admin)])
 async def upload_manifest(request: Request, file: UploadFile = File(...)):
     content = await file.read()

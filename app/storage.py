@@ -41,6 +41,9 @@ class BoardStore:
     def zip_path(self, slug: str, version: str) -> Path:
         return self.board_path(slug, version) / "manifest.zip"
 
+    def pdf_path(self, slug: str, version: str) -> Path:
+        return self.board_path(slug, version) / "build-doc.pdf"
+
     def list_boards(self) -> List[str]:
         if not self._root.is_dir():
             return []
