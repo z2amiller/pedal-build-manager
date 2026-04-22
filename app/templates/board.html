@@ -311,8 +311,8 @@
       var rows = Array.from(tbody.querySelectorAll('tr.bom-row'));
       rows.sort(function(a, b) {
         if (sortBy === 'value') return cmpHuman(a.dataset.value, b.dataset.value);
-        if (sortBy === 'geo-y') return parseFloat(a.dataset.y) - parseFloat(b.dataset.y);
-        if (sortBy === 'geo-x') return parseFloat(a.dataset.x) - parseFloat(b.dataset.x);
+        if (sortBy === 'geo-y') return (parseFloat(a.dataset.y) - parseFloat(b.dataset.y)) || (parseFloat(a.dataset.x) - parseFloat(b.dataset.x));
+        if (sortBy === 'geo-x') return (parseFloat(a.dataset.x) - parseFloat(b.dataset.x)) || (parseFloat(a.dataset.y) - parseFloat(b.dataset.y));
         return cmpRef(a.dataset.ref, b.dataset.ref);
       });
       rows.forEach(function(r) { tbody.appendChild(r); });
