@@ -407,11 +407,14 @@ def _compose_svg(manifest: Manifest, zip_path: str) -> str:
 
 @router.get("/", response_class=HTMLResponse)
 async def index(request: Request) -> HTMLResponse:
-    """Index page — lists available boards."""
+    """Index page — lists all available boards."""
+    boards = db.list_boards(request.app.state.db)
+    for board in boards:
+        board["versions"] = db.list_versions(request.app.state.db, board["slug"])
     return templates.TemplateResponse(
         request=request,
         name="index.html",
-        context={"message": "No boards loaded yet."},
+        context={"boards": boards},
     )
 
 

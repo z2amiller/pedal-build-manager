@@ -3,8 +3,59 @@
 {% block title %}Pedal Build Manager{% endblock %}
 
 {% block content %}
-<div style="padding: 2rem;">
+<style>
+  .index-wrap { max-width: 700px; margin: 0 auto; padding: 2rem; }
+  h1 { margin-top: 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th { text-align: left; padding: .5rem .75rem; border-bottom: 2px solid #ddd;
+       background: #f5f5f5; }
+  td { padding: .5rem .75rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  .badge-default { display: inline-block; background: #0066cc; color: #fff;
+                   border-radius: 3px; padding: 1px 6px; font-size: .75rem;
+                   margin-left: .4rem; }
+  a.board-link { color: #0066cc; font-weight: 500; }
+  .empty { color: #888; font-style: italic; padding: 1rem 0; }
+  .slug { color: #888; font-size: .8rem; }
+</style>
+
+<div class="index-wrap">
   <h1>Pedal Build Manager</h1>
-  <p>{{ message }}</p>
+
+  {% if boards %}
+  <table>
+    <thead>
+      <tr>
+        <th>Board</th>
+        <th>Version</th>
+        <th>Uploaded</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for board in boards %}
+        {% for v in board.versions %}
+        <tr>
+          {% if loop.first %}
+          <td rowspan="{{ board.versions | length }}">
+            <a class="board-link" href="/board/{{ board.slug }}">{{ board.display_name or board.slug }}</a>
+            <br><span class="slug">{{ board.slug }}</span>
+          </td>
+          {% endif %}
+          <td>
+            <a href="/board/{{ board.slug }}/{{ v.version }}">{{ v.version }}</a>
+            {% if v.version == board.default_version %}
+            <span class="badge-default">default</span>
+            {% endif %}
+          </td>
+          <td>{{ (v.uploaded_at or "")[:10] }}</td>
+        </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">No boards uploaded yet.</p>
+  {% endif %}
 </div>
 {% endblock %}
