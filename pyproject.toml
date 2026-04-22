@@ -15,10 +15,11 @@ dependencies = [
     "jsonschema>=4.0",
     "referencing>=0.28",
     "markdown>=3.5",
+    "kicad-pedal-common @ git+https://github.com/z2amiller/kicad-pedal-common.git",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx", "ruff", "kicad-pedal-common"]
+dev = ["pytest", "httpx", "ruff"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["app"]
