@@ -21,13 +21,26 @@
     }
 
     .panel-left {
-      width: 320px;
+      width: 380px;
+      min-width: 180px;
+      max-width: 70vw;
       overflow-y: auto;
-      border-right: 1px solid #ddd;
+      flex-shrink: 0;
     }
+
+    .panel-divider {
+      width: 5px;
+      cursor: col-resize;
+      background: #ddd;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .panel-divider:hover,
+    .panel-divider.dragging { background: #aaa; }
 
     .panel-right {
       flex: 1;
+      min-width: 0;
       position: relative;
     }
   </style>

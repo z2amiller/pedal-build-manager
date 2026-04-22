@@ -110,7 +110,7 @@
   .bom-group-header.hidden { display: none; }
 </style>
 
-<div class="two-panel">
+<div class="two-panel" id="two-panel">
   <div class="panel-left" id="bom-panel">
     <div class="board-header">
       {% if manifest %}
@@ -151,6 +151,7 @@
     </table>
   </div>
 
+  <div class="panel-divider" id="panel-divider"></div>
   <div class="panel-right" id="board-panel" style="position:relative;">
     {% if board_svg %}
       <div id="board-toolbar">
@@ -233,7 +234,7 @@
         (function () {
           var el = document.getElementById('board-svg');
           if (!el) return;
-          var panZoom = svgPanZoom(el, {
+          var panZoom = window.__panZoom = svgPanZoom(el, {
             zoomEnabled: true,
             controlIconsEnabled: true,
             fit: true,
@@ -524,6 +525,56 @@
     void shape.offsetWidth; // force reflow to restart animation
     shape.classList.add('pulse');
     setTimeout(function () { shape.classList.remove('pulse'); }, 600);
+  });
+})();
+</script>
+
+<script>
+// Draggable panel splitter
+(function () {
+  var STORE_KEY = 'panel-left-width:{{ slug }}';
+  var divider = document.getElementById('panel-divider');
+  var panel   = document.getElementById('bom-panel');
+  if (!divider || !panel) return;
+
+  // Restore saved width
+  var saved = localStorage.getItem(STORE_KEY);
+  if (saved) panel.style.width = saved + 'px';
+
+  var dragging = false;
+  var startX, startW;
+
+  divider.addEventListener('mousedown', function (e) {
+    dragging = true;
+    startX = e.clientX;
+    startW = panel.offsetWidth;
+    divider.classList.add('dragging');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function (e) {
+    if (!dragging) return;
+    var minW = 180;
+    var maxW = Math.round(window.innerWidth * 0.70);
+    var w = Math.min(maxW, Math.max(minW, startW + (e.clientX - startX)));
+    panel.style.width = w + 'px';
+  });
+
+  document.addEventListener('mouseup', function () {
+    if (!dragging) return;
+    dragging = false;
+    divider.classList.remove('dragging');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    localStorage.setItem(STORE_KEY, panel.offsetWidth);
+    // Re-fit the board SVG after resize
+    if (window.__panZoom) {
+      window.__panZoom.resize();
+      window.__panZoom.fit();
+      window.__panZoom.center();
+    }
   });
 })();
 </script>
