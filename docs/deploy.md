@@ -22,7 +22,8 @@ chown -R pedalbuild:pedalbuild /opt/pedal-build-manager /var/lib/pedal-build-man
 cd /opt/pedal-build-manager
 git clone <repo-url> .
 python3 -m venv venv
-venv/bin/pip install -e ".[dev]"
+venv/bin/pip install --upgrade pip
+venv/bin/pip install ".[dev]"
 ```
 
 ### 3. Configure environment
@@ -113,6 +114,7 @@ systemctl start pedal-build-manager
 ```bash
 cd /opt/pedal-build-manager
 git pull
-venv/bin/pip install -e ".[dev]"
+venv/bin/pip install --upgrade pip
+venv/bin/pip install ".[dev]"
 systemctl restart pedal-build-manager
 ```
