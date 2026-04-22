@@ -15,7 +15,7 @@ dependencies = [
     "jsonschema>=4.0",
     "referencing>=0.28",
     "markdown>=3.5",
-    "kicad-pedal-common @ git+https://github.com/z2amiller/kicad-pedal-common.git",
+    "kicad-pedal-common @ git+https://github.com/z2amiller/kicad-pedal-tools.git#subdirectory=kicad_pedal_common",
 ]
 
 [project.optional-dependencies]
