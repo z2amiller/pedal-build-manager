@@ -145,7 +145,7 @@
           <td class="bom-check"><input type="checkbox" class="comp-check" data-ref="{{ item.ref }}"></td>
           <td class="bom-ref">{{ item.ref }}</td>
           <td class="bom-value">{{ item.value }}</td>
-          <td class="bom-fp">{{ item.footprint.split(':')[-1] if item.footprint else '' }}</td>
+          <td class="bom-fp">{{ item.description if item.description else (item.footprint.split(':')[-1] if item.footprint else '') }}</td>
         </tr>
         {% endfor %}
       </tbody>
