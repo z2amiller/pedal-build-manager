@@ -1,0 +1,1587 @@
+{
+  "schema_version": "1.0",
+  "board_name": "fx-bloodyg",
+  "display_name": "fx-BloodyG",
+  "version": "1.0.0",
+  "created_at": "2026-04-21T19:25:46Z",
+  "board_bounds": {
+    "x": 0.0,
+    "y": 0.0,
+    "width": 57.5,
+    "height": 63.29
+  },
+  "layers": {
+    "f_mask": "svg/f_mask.svg",
+    "f_paste": "svg/f_paste.svg",
+    "edge_cuts": "svg/edge_cuts.svg",
+    "f_silks": "svg/f_silks.svg"
+  },
+  "components": [
+    {
+      "ref": "C9",
+      "value": "47p",
+      "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 19.675,
+      "pos_y": 27.235,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.67,
+          "h": 6.6802
+        },
+        "anchor_x": 10.8393,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "C21",
+      "value": "1u",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 48.37,
+      "pos_y": 11.487,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 9.6774
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 4.8483
+      }
+    },
+    {
+      "ref": "D3",
+      "value": "4148",
+      "footprint": "Diode_THT:D_DO-34_SOD68_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 13.487,
+      "pos_y": 10.598,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 29.0576,
+          "h": 5.5118
+        },
+        "anchor_x": 10.7198,
+        "anchor_y": 2.7683
+      }
+    },
+    {
+      "ref": "R13",
+      "value": "560R",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 36.44,
+      "pos_y": 53.8226,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C3",
+      "value": "47u",
+      "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 12.603,
+      "pos_y": 58.35,
+      "rotation": 270.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 22.2758,
+          "h": 10.4902
+        },
+        "anchor_x": 9.8988,
+        "anchor_y": 5.2482
+      }
+    },
+    {
+      "ref": "RV4",
+      "value": "1K",
+      "footprint": "_MB_potentiometers:Variable Trimmer",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 28.732,
+      "pos_y": 12.122,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__Variable_Trimmer/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__Variable_Trimmer/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__Variable_Trimmer/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 7.0104,
+          "h": 7.3914
+        },
+        "anchor_x": 3.5052,
+        "anchor_y": 3.8862
+      }
+    },
+    {
+      "ref": "SW2",
+      "value": "ON-OFF-ON",
+      "footprint": "_MB_switches:SPDT.LUGS",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 48.925,
+      "pos_y": 40.951,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_switches__SPDT_LUGS/overlay.svg",
+        "fab_svg": "fp/_MB_switches__SPDT_LUGS/fab.svg",
+        "courtyard_svg": "fp/_MB_switches__SPDT_LUGS/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 8.4328,
+          "h": 15.2146
+        },
+        "anchor_x": 5.0959,
+        "anchor_y": 6.4612
+      }
+    },
+    {
+      "ref": "D1",
+      "value": "5817",
+      "footprint": "Diode_THT:D_DO-34_SOD68_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 2.316,
+      "pos_y": 2.597,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 29.0576,
+          "h": 5.5118
+        },
+        "anchor_x": 10.7198,
+        "anchor_y": 2.7683
+      }
+    },
+    {
+      "ref": "C5",
+      "value": "220n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W3.0mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.88,
+      "pos_y": 18.98,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 7.1882
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.5983
+      }
+    },
+    {
+      "ref": "R5",
+      "value": "10K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 13.365,
+      "pos_y": 46.285,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "D2",
+      "value": "Ge",
+      "footprint": "Diode_THT:D_DO-34_SOD68_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 21.112,
+      "pos_y": 13.9,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 29.0576,
+          "h": 5.5118
+        },
+        "anchor_x": 10.7198,
+        "anchor_y": 2.7683
+      }
+    },
+    {
+      "ref": "C20",
+      "value": "100n",
+      "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 42.5,
+      "pos_y": 17.29,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.67,
+          "h": 6.6802
+        },
+        "anchor_x": 10.8393,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "R6",
+      "value": "5.6K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.92,
+      "pos_y": 53.905,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C2",
+      "value": "10n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 19.675,
+      "pos_y": 50.095,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "R17",
+      "value": "10K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 36.19,
+      "pos_y": 24.04,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C11",
+      "value": "2.2u",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.88,
+      "pos_y": 13.9,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 9.6774
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 4.8483
+      }
+    },
+    {
+      "ref": "J3",
+      "value": "Conn_01x02_Pin",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 38.13,
+      "pos_y": 6.14,
+      "rotation": 90.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/overlay.svg",
+        "fab_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/fab.svg",
+        "courtyard_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.416,
+          "h": 8.9916
+        },
+        "anchor_x": 13.2202,
+        "anchor_y": 3.2283
+      }
+    },
+    {
+      "ref": "U2",
+      "value": "TL072",
+      "footprint": "Package_DIP:DIP-8_W7.62mm_Socket",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 24.922,
+      "pos_y": 17.71,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/overlay.svg",
+        "fab_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/fab.svg",
+        "courtyard_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 18.5166,
+          "h": 13.97
+        },
+        "anchor_x": 5.4579,
+        "anchor_y": 3.1783
+      }
+    },
+    {
+      "ref": "RV2",
+      "value": "A250K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.5,
+      "pos_y": 31.5178,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "C1",
+      "value": "100u",
+      "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 5.11,
+      "pos_y": 58.35,
+      "rotation": 270.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 22.2758,
+          "h": 10.4902
+        },
+        "anchor_x": 9.8988,
+        "anchor_y": 5.2482
+      }
+    },
+    {
+      "ref": "R18",
+      "value": "22K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 43.81,
+      "pos_y": 27.29,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "R12",
+      "value": "100K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 44.06,
+      "pos_y": 50.0332,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C19",
+      "value": "220p",
+      "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 37.5,
+      "pos_y": 20.79,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.67,
+          "h": 6.6802
+        },
+        "anchor_x": 10.8393,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "RV3",
+      "value": "A50K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 28.75,
+      "pos_y": 6.2678,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "C16",
+      "value": "220n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W3.0mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 48.37,
+      "pos_y": 20.79,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 7.1882
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.5983
+      }
+    },
+    {
+      "ref": "RV1",
+      "value": "C25K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 28.75,
+      "pos_y": 31.5178,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "C10",
+      "value": "1u",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 14.675,
+      "pos_y": 22.155,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 9.6774
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 4.8483
+      }
+    },
+    {
+      "ref": "R10",
+      "value": "10R",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 24.922,
+      "pos_y": 2.724,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "J2",
+      "value": "Conn_01x02_Pin",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 17.429,
+      "pos_y": 6.153,
+      "rotation": 90.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/overlay.svg",
+        "fab_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/fab.svg",
+        "courtyard_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x02_P2_54mm_Vertical/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.416,
+          "h": 8.9916
+        },
+        "anchor_x": 13.2202,
+        "anchor_y": 3.2283
+      }
+    },
+    {
+      "ref": "C8",
+      "value": "100p",
+      "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 19.55,
+      "pos_y": 34.99,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Disc_D5_0mm_W2_5mm_P5_00mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.67,
+          "h": 6.6802
+        },
+        "anchor_x": 10.8393,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "R11",
+      "value": "22R",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 48.544,
+      "pos_y": 60.89,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "R2",
+      "value": "4.7K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 25.15,
+      "pos_y": 57.334,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "R1",
+      "value": "5.1K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 1.3,
+      "pos_y": 50.095,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C13",
+      "value": "1u",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 37.6,
+      "pos_y": 58.99,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W5_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 9.6774
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 4.8483
+      }
+    },
+    {
+      "ref": "U1",
+      "value": "LM386",
+      "footprint": "Package_DIP:DIP-8_W7.62mm_Socket",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 24.95,
+      "pos_y": 42.475,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/overlay.svg",
+        "fab_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/fab.svg",
+        "courtyard_svg": "fp/Package_DIP__DIP-8_W7_62mm_Socket/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 18.5166,
+          "h": 13.97
+        },
+        "anchor_x": 5.4579,
+        "anchor_y": 3.1783
+      }
+    },
+    {
+      "ref": "SW1",
+      "value": "ON-OFF-ON",
+      "footprint": "_MB_switches:SPDT.LUGS",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.285,
+      "pos_y": 41.04,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_switches__SPDT_LUGS/overlay.svg",
+        "fab_svg": "fp/_MB_switches__SPDT_LUGS/fab.svg",
+        "courtyard_svg": "fp/_MB_switches__SPDT_LUGS/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 8.4328,
+          "h": 15.2146
+        },
+        "anchor_x": 5.0959,
+        "anchor_y": 6.4612
+      }
+    },
+    {
+      "ref": "C14",
+      "value": "2.2n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 49.854,
+      "pos_y": 53.6933,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "R4",
+      "value": "1M",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 20.985,
+      "pos_y": 42.475,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "J1",
+      "value": "Conn_01x04_Pins",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 25.176,
+      "pos_y": 60.79,
+      "rotation": 90.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x04_P2_54mm_Vertical/overlay.svg",
+        "fab_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x04_P2_54mm_Vertical/fab.svg",
+        "courtyard_svg": "fp/Connector_PinHeader_2_54mm__PinHeader_1x04_P2_54mm_Vertical/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 26.416,
+          "h": 14.0716
+        },
+        "anchor_x": 13.2202,
+        "anchor_y": 3.2283
+      }
+    },
+    {
+      "ref": "C15",
+      "value": "2.7n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 49.854,
+      "pos_y": 50.095,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "RV6",
+      "value": "A100K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 49.17,
+      "pos_y": 31.54,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "C4",
+      "value": "47u",
+      "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 19.842,
+      "pos_y": 58.263,
+      "rotation": 270.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__CP_Radial_D6_3mm_P2_50mm/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 22.2758,
+          "h": 10.4902
+        },
+        "anchor_x": 9.8988,
+        "anchor_y": 5.2482
+      }
+    },
+    {
+      "ref": "D5",
+      "value": "Ge",
+      "footprint": "Diode_THT:D_DO-34_SOD68_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 36.185,
+      "pos_y": 10.598,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 29.0576,
+          "h": 5.5118
+        },
+        "anchor_x": 10.7198,
+        "anchor_y": 2.7683
+      }
+    },
+    {
+      "ref": "R7",
+      "value": "2.2K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 10.19,
+      "pos_y": 26.6,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "R15",
+      "value": "22K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 36.44,
+      "pos_y": 42.4544,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C6",
+      "value": "150n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W3.0mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.88,
+      "pos_y": 22.79,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 7.1882
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.5983
+      }
+    },
+    {
+      "ref": "C17",
+      "value": "33n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 42.75,
+      "pos_y": 38.665,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "RV5",
+      "value": "B50K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 8.5,
+      "pos_y": 6.2678,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "R8",
+      "value": "1K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 32.55,
+      "pos_y": 38.665,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "C18",
+      "value": "150n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W3.0mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 53.2976,
+      "pos_y": 24.516,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W3_0mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 7.1882
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.5983
+      }
+    },
+    {
+      "ref": "R14",
+      "value": "18K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 44.06,
+      "pos_y": 46.2438,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "D4",
+      "value": "Ge",
+      "footprint": "Diode_THT:D_DO-34_SOD68_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 43.815,
+      "pos_y": 13.9,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Diode_THT__D_DO-34_SOD68_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 29.0576,
+          "h": 5.5118
+        },
+        "anchor_x": 10.7198,
+        "anchor_y": 2.7683
+      }
+    },
+    {
+      "ref": "R3",
+      "value": "1M",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 20.985,
+      "pos_y": 53.905,
+      "rotation": 180.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "R9",
+      "value": "3.3K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 13.365,
+      "pos_y": 17.075,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    },
+    {
+      "ref": "RV7",
+      "value": "A250K",
+      "footprint": "_MB_potentiometers:16MM_B.MOUNT",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 49.0,
+      "pos_y": 6.2678,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/overlay.svg",
+        "fab_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/fab.svg",
+        "courtyard_svg": "fp/_MB_potentiometers__16MM_B_MOUNT/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 17.907,
+          "h": 28.702
+        },
+        "anchor_x": 8.9535,
+        "anchor_y": 24.9555
+      }
+    },
+    {
+      "ref": "C7",
+      "value": "15n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 14.675,
+      "pos_y": 38.665,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "C12",
+      "value": "47n",
+      "footprint": "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 49.854,
+      "pos_y": 57.2917,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/overlay.svg",
+        "fab_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/fab.svg",
+        "courtyard_svg": "fp/Capacitor_THT__C_Rect_L7_2mm_W2_5mm_P5_00mm_FKS2_FKP2_MKS2_MKP2/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 45.3898,
+          "h": 6.6802
+        },
+        "anchor_x": 20.1964,
+        "anchor_y": 3.3483
+      }
+    },
+    {
+      "ref": "R16",
+      "value": "1K",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+      "description": "",
+      "notes": "",
+      "layer": "F",
+      "pos_x": 47.06,
+      "pos_y": 17.2323,
+      "rotation": 0.0,
+      "do_not_populate": false,
+      "exclude_from_bom": false,
+      "outline": {
+        "type": "svg",
+        "overlay_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/overlay.svg",
+        "fab_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/fab.svg",
+        "courtyard_svg": "fp/Resistor_THT__R_Axial_DIN0207_L6_3mm_D2_5mm_P7_62mm_Horizontal/courtyard.svg",
+        "bbox": {
+          "x": 0.0,
+          "y": 0.0,
+          "w": 42.291,
+          "h": 6.4262
+        },
+        "anchor_x": 17.3388,
+        "anchor_y": 3.2182
+      }
+    }
+  ]
+}
