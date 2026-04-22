@@ -127,6 +127,8 @@
         <select id="bom-sort">
           <option value="ref">Reference</option>
           <option value="value">Value</option>
+          <option value="geo-y">Top → Bottom</option>
+          <option value="geo-x">Left → Right</option>
         </select>
       </label>
       <label style="margin-left:1rem;font-size:0.85rem;"><input type="checkbox" id="hide-completed"> Hide completed</label>
@@ -139,7 +141,7 @@
       <tbody data-group="{{ group_name }}">
         <tr class="bom-group-header"><td colspan="4">{{ group_name }}</td></tr>
         {% for item in group_items %}
-        <tr class="bom-row" data-ref="{{ item.ref }}" data-value="{{ item.value }}">
+        <tr class="bom-row" data-ref="{{ item.ref }}" data-value="{{ item.value }}" data-x="{{ item.pos_x }}" data-y="{{ item.pos_y }}">
           <td class="bom-check"><input type="checkbox" class="comp-check" data-ref="{{ item.ref }}"></td>
           <td class="bom-ref">{{ item.ref }}</td>
           <td class="bom-value">{{ item.value }}</td>
@@ -308,9 +310,10 @@
     tbodies.forEach(function(tbody) {
       var rows = Array.from(tbody.querySelectorAll('tr.bom-row'));
       rows.sort(function(a, b) {
-        return sortBy === 'value'
-          ? cmpHuman(a.dataset.value, b.dataset.value)
-          : cmpRef(a.dataset.ref, b.dataset.ref);
+        if (sortBy === 'value') return cmpHuman(a.dataset.value, b.dataset.value);
+        if (sortBy === 'geo-y') return parseFloat(a.dataset.y) - parseFloat(b.dataset.y);
+        if (sortBy === 'geo-x') return parseFloat(a.dataset.x) - parseFloat(b.dataset.x);
+        return cmpRef(a.dataset.ref, b.dataset.ref);
       });
       rows.forEach(function(r) { tbody.appendChild(r); });
     });
